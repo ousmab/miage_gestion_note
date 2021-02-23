@@ -1,9 +1,12 @@
 from app.addons.users import users_module
 from flask import render_template
 
-__route = users_module
+_route = users_module
 
 
-@__route.route("/merci")
+@_route.route("/")
 def users():
     return render_template("index.html")
+
+
+
