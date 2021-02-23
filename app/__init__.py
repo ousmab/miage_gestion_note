@@ -4,7 +4,7 @@ from app.addons.users import users_module
 import app.addons.index.controllers.indexController
 import app.addons.users.controllers.usersController
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="core/static", template_folder="core/templates")
 
 # CONFIGURATION
 
