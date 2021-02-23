@@ -1,6 +1,8 @@
 from app.addons.index import index_module
 
+__route = index_module
 
-@index_module.route("/index")
+
+@__route.route("/index")
 def index():
     return "index  blueprint oooy"

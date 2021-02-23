@@ -1,23 +1,25 @@
 from flask import Flask
-from app.addons.index import index_module
-from app.addons.users import users_module
-import app.addons.index.controllers.indexController
-import app.addons.users.controllers.usersController
+from importlib import import_module
+
 
 app = Flask(__name__, static_folder="core/static", template_folder="core/templates")
 
-# CONFIGURATION
+# load the config file
 
-# EXTENTION FLASK
+try:
+    app.config.from_pyfile("config.py")
+except IOError as e:
+    raise IOError("Configuration error : config.py not found ! ", e)
 
+# import different blueprint and controllers
+for addon in app.config["ADDONS"]:
+    module = import_module(addon['path'], package='app')
+    if addon['url']:
+        app.register_blueprint(getattr(module, "__route"), url_prefix=addon['url'])
+    else:
+        app.register_blueprint(getattr(module, "__route"))
 
-# ENREGISTREMENT DES MODULES
+# app configuration
 
-# IMPORT DES CONTROLLEURS
-app.register_blueprint(index_module)  # bluprint
-app.register_blueprint(users_module, url_prefix="/users")
-"""
-@app.route("/")
-def home():
-    return "merci"
-"""
+# extensions configuration
+
