@@ -11,6 +11,10 @@ app = Flask(__name__, static_folder="core/static", template_folder="core/templat
 app.config["SQLALCHEMY_DATABASE_URI"] = ENV["DATABASE_URI"]
 app.config["SECRET_KEY"] = ENV["SECRET_KEY"]
 
+# app extensions
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
 # load the config file
 
 try:
@@ -27,7 +31,5 @@ for addon in app.config["ADDONS"]:
         app.register_blueprint(getattr(module, "_route"))
 
 
-# app extensions
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
 
