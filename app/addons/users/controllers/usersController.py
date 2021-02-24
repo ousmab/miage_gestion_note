@@ -7,10 +7,10 @@ _route = users_module
 
 
 @_route.route("/")
-def users():
+def home():
     user = UserModel.query.filter_by(email="aboousmane@gmail").first()
     login_user(user)
-    return render_template("index.html", user=user)
+    return render_template("home.html", user=user)
 
 
 @_route.route("/dashboard")
